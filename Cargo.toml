@@ -19,6 +19,3 @@ default = ["alloc"]
 alloc = []
 # Currently does nothing.
 std = ["alloc"]
-
-[dev-dependencies]
-rustversion = "1.0.14"
