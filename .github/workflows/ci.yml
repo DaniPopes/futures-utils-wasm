@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   test:
-    name: test ${{ matrix.rust }} ${{ matrix.flags }}
+    name: test ${{ matrix.rust }} ${{ matrix.target }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
@@ -31,10 +31,10 @@ jobs:
         with:
           cache-on-failure: true
       - name: build
-        if: ${{ matrix.rust == '1.36' }}
+        if: ${{ matrix.rust == '1.36' || matrix.target == "wasm32-unknown-unknown" }}
         run: cargo build --workspace --target ${{ matrix.target }}
       - name: test
-        if: ${{ matrix.rust != '1.36' }}
+        if: ${{ !(matrix.rust == '1.36' || matrix.target == "wasm32-unknown-unknown") }}
         run: cargo test --workspace --target ${{ matrix.target }}
 
   feature-checks:
